@@ -1,120 +1,76 @@
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Edit Student</title>
-</head>
-<body>
+<x-layouts.app title="Edit Student">
+    <h1>Edit Student</h1>
 
-    <h1>Edit Student Information</h1>
-
-    {{-- Display validation errors --}}
-    @if($errors->any())
-        <div style="color: red;">
-            <h3>Please fix the following errors:</h3>
-
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    {{-- Edit student form --}}
-    <form action="/students/{{ $student->id }}" method="POST">
-
+    <form action="{{ route('students.update', $student) }}" method="POST">
         @csrf
         @method('PUT')
 
-        {{-- Student Name --}}
-        <label for="name">Full Name:</label>
-        <br>
+        <div>
+            <label for="name">Name</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                value="{{ old('name', $student->name) }}"
+                required
+            >
+            @error('name')
+                <p>{{ $message }}</p>
+            @enderror
+        </div>
 
-        <input
-            type="text"
-            id="name"
-            name="name"
-            value="{{ old('name', $student->name) }}"
-            required
-        >
+        <div>
+            <label for="email">Email</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                value="{{ old('email', $student->email) }}"
+                required
+            >
+            @error('email')
+                <p>{{ $message }}</p>
+            @enderror
+        </div>
 
-        <br><br>
+        <div>
+            <label for="phone">Phone</label>
+            <input
+                type="text"
+                id="phone"
+                name="phone"
+                value="{{ old('phone', $student->phone) }}"
+                required
+            >
+            @error('phone')
+                <p>{{ $message }}</p>
+            @enderror
+        </div>
 
-        {{-- Email --}}
-        <label for="email">Email:</label>
-        <br>
+        <div>
+            <label for="address">Address</label>
+            <textarea id="address" name="address">{{ old('address', $student->address) }}</textarea>
+            @error('address')
+                <p>{{ $message }}</p>
+            @enderror
+        </div>
 
-        <input
-            type="email"
-            id="email"
-            name="email"
-            value="{{ old('email', $student->email) }}"
-            required
-        >
+        <div>
+            <label for="date_of_birth">Date of Birth</label>
+            <input
+                type="date"
+                id="date_of_birth"
+                name="date_of_birth"
+                value="{{ old('date_of_birth', $student->date_of_birth?->format('Y-m-d')) }}"
+            >
+            @error('date_of_birth')
+                <p>{{ $message }}</p>
+            @enderror
+        </div>
 
-        <br><br>
+        <button type="submit" class="btn">Update Student</button>
 
-        {{-- Phone --}}
-        <label for="phone">Phone:</label>
-        <br>
-
-        <input
-            type="text"
-            id="phone"
-            name="phone"
-            value="{{ old('phone', $student->phone) }}"
-            required
-        >
-
-        <br><br>
-
-        {{-- Address --}}
-        <label for="address">Address:</label>
-        <br>
-
-        <textarea
-            id="address"
-            name="address"
-            rows="4"
-            cols="40"
-        >{{ old('address', $student->address) }}</textarea>
-
-        <br><br>
-
-        {{-- Date of Birth --}}
-        <label for="date_of_birth">Date of Birth:</label>
-        <br>
-
-        <input
-            type="date"
-            id="date_of_birth"
-            name="date_of_birth"
-            value="{{ old('date_of_birth', $student->date_of_birth) }}"
-        >
-
-        <br><br>
-
-        {{-- Submit button --}}
-        <button type="submit">
-            Update Student
-        </button>
-
+        <a href="{{ route('students.show', $student) }}">Cancel</a>
     </form>
-
-    <br>
-
-    {{-- Back to student details --}}
-    <a href="/students/{{ $student->id }}">
-        Cancel
-    </a>
-
-    <br><br>
-
-    {{-- Back to student list --}}
-    <a href="/students">
-        Back to Student List
-    </a>
-
-</body>
-</html>
+</x-layouts.app>

@@ -1,78 +1,34 @@
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Student Details</title>
-</head>
-<body>
+<x-layouts.app title="Student Details">
 
     <h1>Student Details</h1>
 
-    {{-- Success message --}}
-    @if(session('success'))
-        <p style="color: green;">
-            {{ session('success') }}
-        </p>
-    @endif
+    <p><strong>ID:</strong> {{ $student->id }}</p>
 
-    {{-- Display student information --}}
-    <table border="1" cellpadding="10" cellspacing="0">
+    <p><strong>Name:</strong> {{ $student->name }}</p>
 
-        <tr>
-            <th>ID</th>
-            <td>{{ $student->id }}</td>
-        </tr>
+    <p><strong>Email:</strong> {{ $student->email }}</p>
 
-        <tr>
-            <th>Name</th>
-            <td>{{ $student->name }}</td>
-        </tr>
+    <p><strong>Phone:</strong> {{ $student->phone }}</p>
 
-        <tr>
-            <th>Email</th>
-            <td>{{ $student->email }}</td>
-        </tr>
+    <p><strong>Address:</strong> {{ $student->address ?? 'Not provided' }}</p>
 
-        <tr>
-            <th>Phone</th>
-            <td>{{ $student->phone }}</td>
-        </tr>
+    <p>
+        <strong>Date of Birth:</strong>
+        {{ $student->date_of_birth?->format('d M Y') ?? 'Not provided' }}
+    </p>
 
-        <tr>
-            <th>Address</th>
-            <td>{{ $student->address ?? 'N/A' }}</td>
-        </tr>
+    <p>
+        <strong>Age:</strong>
+        {{ $student->age ?? 'Not available' }}
+    </p>
 
-        <tr>
-            <th>Date of Birth</th>
-            <td>{{ $student->date_of_birth ?? 'N/A' }}</td>
-        </tr>
-
-        <tr>
-            <th>Created At</th>
-            <td>{{ $student->created_at }}</td>
-        </tr>
-
-        <tr>
-            <th>Updated At</th>
-            <td>{{ $student->updated_at }}</td>
-        </tr>
-
-    </table>
-
-    <br>
-
-    {{-- Edit student --}}
-    <a href="/students/{{ $student->id }}/edit">
+    <a href="{{ route('students.edit', $student) }}" class="btn">
         Edit Student
     </a>
 
-    <br><br>
-
-    {{-- Back to student list --}}
-    <a href="/students">
-        Back to Student List
+    <a href="{{ route('students.index') }}">
+        Back to Students
     </a>
 
-</body>
-</html>
+</x-layouts.app>
